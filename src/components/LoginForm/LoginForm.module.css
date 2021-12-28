@@ -1,0 +1,23 @@
+.form {
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+}
+
+.label {
+    display: inline-block;
+    margin-top: 15px;
+}
+
+.inputEmail {
+    margin-left: 35px;
+}
+
+.inputPassword {
+    margin-left: 5px;
+}
+
+.button {
+    width: 100px;
+}
