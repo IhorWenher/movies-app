@@ -42,8 +42,8 @@ const LoginForm = () => {
 
   return (
     <Form onSubmit={handleSubmit} className={Styles.form} autoComplete="off">
+      <h1 className={Styles.h1}>Login</h1>
       <Form.Group className="mb-3" controlId="formLoginEmail">
-        <Form.Label>Email address</Form.Label>
         <Form.Control
           type="email"
           placeholder="Enter email"
@@ -54,7 +54,6 @@ const LoginForm = () => {
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formLoginPassword">
-        <Form.Label>Password</Form.Label>
         <Form.Control
           type="password"
           placeholder="Enter password"
@@ -63,16 +62,17 @@ const LoginForm = () => {
           onChange={handleChange}
         />
       </Form.Group>
-
-      <Button variant="primary" type="submit" className={Styles.button}>
-        Enter
-      </Button>
-      <p>or</p>
-      <Link to="/register" className={Styles.authLink}>
+      <div className={Styles.buttons}>
         <Button variant="primary" type="submit" className={Styles.button}>
-          Sign In
+          Enter
         </Button>
-      </Link>
+        <p>or</p>
+        <Link to="/register" className={Styles.authLink}>
+          <Button variant="primary" type="submit" className={Styles.button}>
+            Sign In
+          </Button>
+        </Link>
+      </div>
     </Form>
   );
 };

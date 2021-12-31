@@ -1,11 +1,11 @@
 import LoginForm from '../../components/LoginForm';
-
+import image from '../../images/play.png';
 import Styles from './LoginView.module.css';
 
 const LoginView = () => {
   return (
     <div className={Styles.container}>
-      <h1 className={Styles.h1}>Enter login</h1>
+      <img src={image} alt="play" width="500" />
       <LoginForm />
     </div>
   );

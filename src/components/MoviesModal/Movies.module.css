@@ -1,7 +1,6 @@
 .form {
     width: 50%;
-    margin-top: 10%;
-    margin-bottom: 10%;
+    margin: auto;
     padding: 40px;
     border-radius: 20px;
     background-color: rgb(255, 255, 255);
@@ -56,4 +55,25 @@
     margin-left: 30px;
     border: 1px solid rgb(70, 148, 251);
     border-radius: 5px;
+}
+
+.actorsForm input {
+    margin: 0px auto;
+}
+
+.actorsButton {
+    position: fixed;
+    right: 37%;
+    bottom: 32%;
+    width: 45px;
+    height: 30px;
+    margin-left: 30px;
+    color: rgb(255, 255, 255);
+    border: 1px solid rgb(70, 148, 251);
+    background-color: rgb(70, 148, 251);
+    border-radius: 5px;
+}
+
+.quantity {
+    color: rgb(70, 148, 251);
 }

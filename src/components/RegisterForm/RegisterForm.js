@@ -81,8 +81,8 @@ const RegisterForm = () => {
 
   return (
     <Form onSubmit={handleSubmit} className={Styles.form} autoComplete="off">
+      <h1 className={Styles.h1}>Registration</h1>
       <Form.Group className="mb-3" controlId="formRegName">
-        <Form.Label>Name</Form.Label>
         <Form.Control
           placeholder="Enter name"
           name="name"
@@ -92,7 +92,6 @@ const RegisterForm = () => {
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formRegEmail">
-        <Form.Label>Email address</Form.Label>
         <Form.Control
           type="email"
           placeholder="Enter email"
@@ -103,7 +102,6 @@ const RegisterForm = () => {
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formRegPassword">
-        <Form.Label>Password</Form.Label>
         <Form.Control
           type="password"
           placeholder="Enter password"
@@ -114,7 +112,6 @@ const RegisterForm = () => {
       </Form.Group>
 
       <Form.Group className="mb-4" controlId="formRegConfPassword">
-        <Form.Label>Password</Form.Label>
         <Form.Control
           type="password"
           placeholder="Confirm your password"
@@ -123,16 +120,17 @@ const RegisterForm = () => {
           onChange={handleChange}
         />
       </Form.Group>
-
-      <Button variant="primary" type="submit" className={Styles.button}>
-        Register
-      </Button>
-      <p>or</p>
-      <Link to="/login" className={Styles.authLink}>
-        <Button className={Styles.logBtn} type="submit">
-          Log in
+      <div className={Styles.buttons}>
+        <Button variant="primary" type="submit" className={Styles.button}>
+          Register
         </Button>
-      </Link>
+        <p>or</p>
+        <Link to="/login">
+          <Button className={Styles.button} type="submit">
+            Log in
+          </Button>
+        </Link>
+      </div>
     </Form>
   );
 };

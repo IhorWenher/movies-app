@@ -9,5 +9,6 @@ export default function PrivateRoute({
   ...routeProps
 }) {
   const isLoggedIn = useSelector(userSelectors.getIsLoggedIn);
-  return <div>{isLoggedIn ? children : <Navigate to={redirectTo} />}</div>;
+  const token = useSelector(userSelectors.getUserToken);
+  return <>{isLoggedIn || token ? children : <Navigate to={redirectTo} />}</>;
 }

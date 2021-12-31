@@ -1,0 +1,20 @@
+.list {
+    padding: 0;
+    margin: 0;
+}
+
+.li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 10px;
+    height: 60px;
+    font-size: 28px;
+    list-style: none;
+    margin-top: 15px;
+    color: rgb(43, 93, 158);
+    box-shadow: 0 14px 28px rgba(71, 110, 160, 0.25), 0 10px 10px rgba(11, 12, 71, 0.22);
+    background-color: floralwhite;
+    border-radius: 10px;
+}

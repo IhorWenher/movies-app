@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-//import { accountsOperations } from '../../redux/accounts';
+import { moviesOperations } from '../../redux/movies';
 
 import Styles from './Movies.module.css';
 
-const AccountModal = ({ togleModal }) => {
-  /*   const [company, setCompany] = useState('Nvidia');
-  const [gameName, setGameName] = useState('');
-  const [sum, setSum] = useState('');
-  const [currency, setCurrency] = useState('Euro');
+const MoviesModal = ({ togleModal }) => {
+  const [title, setTitle] = useState('');
+  const [year, setYear] = useState('');
+  const [format, setFormat] = useState('VHS');
+  const [actors, setActors] = useState('');
 
   const dispatch = useDispatch();
 
@@ -17,20 +17,20 @@ const AccountModal = ({ togleModal }) => {
     const { name, value } = event.currentTarget;
 
     switch (name) {
-      case 'company':
-        setCompany(value);
+      case 'title':
+        setTitle(value);
         break;
 
-      case 'gameName':
-        setGameName(value);
+      case 'year':
+        setYear(Number(value));
         break;
 
-      case 'sum':
-        setSum(Number(value));
+      case 'format':
+        setFormat(value);
         break;
 
-      case 'currency':
-        setCurrency(value);
+      case 'actors':
+        setActors(value);
         break;
 
       default:
@@ -41,65 +41,71 @@ const AccountModal = ({ togleModal }) => {
   const handleSubmit = event => {
     event.preventDefault();
 
-    if (gameName === '' || sum === '') {
-      return alert('Enter data!');
+    if (title === '' || year === '' || 2022 > actors > 1930) {
+      return alert('Enter or correct data!');
     }
 
-    const account = {
-      company: company,
-      gameName: gameName,
-      sum: sum,
-      currency: currency,
+    const movie = {
+      title: title,
+      year: year,
+      format: format,
+      actors: [actors, actors, actors, actors],
     };
-
+    console.log(movie);
     togleModal();
 
-    dispatch(accountsOperations.addAccount(account));
+    dispatch(moviesOperations.create(movie));
     reset();
   };
 
   const reset = () => {
-    setCompany('');
-    setGameName('');
-    setSum('');
-    setCurrency('');
-  }; */
-
-  return {
-    /* <form className={Styles.form} action="" onSubmit={handleSubmit}>
-      <p className={Styles.p}>Введите информацию</p>
-      <select className={Styles.select} name="company" onChange={handleChange}>
-        <option value="Nvidia">Nvidia</option>
-        <option value="Activision">Activision</option>
-        <option value="Easports">Easports</option>
-      </select>
-      <input
-        className={Styles.input}
-        name="gameName"
-        type="text"
-        placeholder="Введите название игры"
-        onChange={handleChange}
-      />
-      <input
-        className={Styles.input}
-        name="sum"
-        type="number"
-        placeholder="Введите сумму оплаты"
-        onChange={handleChange}
-      />
-      <select className={Styles.select} name="currency" onChange={handleChange}>
-        <option value="Euro">Euro</option>
-        <option value="Dollar">Dollar</option>
-      </select>
-
-      <div className={Styles.buttons}>
-        <input type="submit" value="Добавить" />
-        <button type="button" className={Styles.btn} onClick={togleModal}>
-          Отмена
-        </button>
-      </div>
-    </form> */
+    setTitle('');
+    setYear('');
+    setFormat('');
+    setActors([]);
   };
+
+  return (
+    <>
+      <form className={Styles.form} action="" onSubmit={handleSubmit}>
+        <p className={Styles.p}>Введите информацию</p>
+        <input
+          className={Styles.input}
+          name="title"
+          type="text"
+          placeholder="Movie name"
+          onChange={handleChange}
+        />
+        <input
+          className={Styles.input}
+          name="year"
+          type="number"
+          max="2022"
+          min="1930"
+          placeholder="Year realise"
+          onChange={handleChange}
+        />
+        <select className={Styles.select} name="format" onChange={handleChange}>
+          <option value="VHS">VHS</option>
+          <option value="DVD">DVD</option>
+          <option value="Blue-Ray">Blue-Ray</option>
+        </select>
+        <input
+          className={Styles.input}
+          name="actors"
+          type="text"
+          onChange={handleChange}
+          placeholder="Add actors"
+        />
+        <div className={Styles.buttons}>
+          <input type="submit" value="Добавить" />
+          <button type="button" className={Styles.btn} onClick={togleModal}>
+            Отмена
+          </button>
+        </div>
+      </form>
+    </>
+  );
 };
 
-export default AccountModal;
+export default MoviesModal;

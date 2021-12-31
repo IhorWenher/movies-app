@@ -3,17 +3,19 @@ import { userSelectors } from '../user';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 axios.defaults.baseURL = 'http://localhost:8000/api/v1';
-axios.defaults.headers.common['Authorization'] = userSelectors.getUserToken;
+axios.defaults.headers.common.Authorization = localStorage
+  .getItem('persist:user')
+  .split('"')[4];
 
 const create = createAsyncThunk(
   'movies/create',
   async (addData, { rejectWithValue }) => {
-    try {
-      const { data } = await axios.post('/movies', addData);
-      return data;
-    } catch (error) {
-      return rejectWithValue(error);
+    console.log(axios.defaults.headers);
+    const { data } = await axios.post('/movies', addData);
+    if (data.status === 0) {
+      return rejectWithValue(data.error.error.code);
     }
+    return data.data;
   },
 );
 
@@ -56,19 +58,18 @@ const getOne = createAsyncThunk(
 const getList = createAsyncThunk(
   'movies/getList',
   async (params, { rejectWithValue }) => {
-    try {
-      const { data } = await axios.get('/movies', {
-        params: {
-          sort: params.sort,
-          order: params.order,
-          limit: params.limit,
-          offset: params.offset,
-        },
-      });
-      return data;
-    } catch (error) {
-      return rejectWithValue(error);
-    }
+    const { data } = await axios.get('/movies', {
+      params: {
+        sort: params.sort,
+        order: params.order,
+        limit: params.limit,
+        offset: params.offset,
+      },
+    });
+
+    return data;
+
+    //return rejectWithValue(error);
   },
 );
 
