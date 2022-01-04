@@ -1,24 +1,19 @@
 .confirmContainer {
-    padding: 40px 20px;
-    width: 100%;
-    margin-top: 10vh;
+    padding: 50px;
+    margin-right: auto;
+    margin-left: auto;
+    width: 50%;
     height: 70vh;
     text-align: center;
     background-color: white;
     border-radius: 20px;
     border: solid #e7eaf2;
-}
-
-@media screen and (min-width: 768px) {
-    .confirmContainer {
-        margin-right: auto;
-        margin-left: auto;
-        width: 540px;
-    }
+    box-shadow: 7px 7px 20px 7px rgb(126, 171, 230);
 }
 
 .text {
     font-size: 30px;
+    color: rgb(53, 127, 224)
 }
 
 .btn {
@@ -37,12 +32,12 @@
 .btn:first-child {
     margin-top: 40px;
     color: white;
-    background-color: #ff6596;
+    background-color: rgb(53, 127, 224);
 }
 
 .btn:last-child {
     margin-top: 20px;
-    color: #4a56e2;
-    border: 1px solid #4a56e2;
+    color: rgb(53, 127, 224);
+    border: 1px solid rgb(53, 127, 224);
     background-color: white;
 }

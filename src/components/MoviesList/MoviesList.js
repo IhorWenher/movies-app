@@ -1,7 +1,6 @@
-import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { moviesOperations } from '../../redux/movies';
-import { getVisibleContacts } from '../../redux/contacts/phonebook-selectors';
+import { Link } from 'react-router-dom';
+import { moviesOperations, moviesSelectors } from '../../redux/movies';
 
 import { Button } from 'react-bootstrap';
 import Styles from './MoviesList.module.css';
@@ -9,33 +8,38 @@ import Styles from './MoviesList.module.css';
 const MoviesList = () => {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(operations.fetchContacts());
-  }, [dispatch]);
-
-  const contacts = useSelector(getVisibleContacts);
+  const movies = useSelector(moviesSelectors.getMovies);
 
   return (
-    <ul className={Styles.list}>
-      {contacts.map(({ id, name, number }) => {
-        return (
-          <li key={id} className={Styles.li}>
-            <span>
-              {name}: {number}
-            </span>
+    <>
+      <ul className={Styles.list}>
+        {movies.map(({ id, title, year, format }) => {
+          return (
+            <li key={id} className={Styles.li}>
+              <span className={Styles.span}>Id: {id}</span>
+              <span className={Styles.span}>Title: {title}</span>
+              <span className={Styles.span}>Year: {year}</span>
+              <span className={Styles.span}>Format: {format}</span>
 
-            <Button
-              variant="primary"
-              type="button"
-              onClick={() => dispatch(operations.deleteContact(id))}
-              /* className={Styles.button} */
-            >
-              Delete
-            </Button>
-          </li>
-        );
-      })}
-    </ul>
+              <Link to={`/movies/${id}`} className={Styles.btn}>
+                <Button variant="primary" type="button">
+                  Show more
+                </Button>
+              </Link>
+
+              <Button
+              className={Styles.deleteBtn}
+                variant="primary"
+                type="button"
+                onClick={() => dispatch(moviesOperations.remove(id))}
+              >
+                Delete
+              </Button>
+            </li>
+          );
+        })}
+      </ul>
+    </>
   );
 };
 

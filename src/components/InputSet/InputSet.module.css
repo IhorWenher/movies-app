@@ -1,0 +1,21 @@
+.inputContainer {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.uploadButton {
+    margin-left: 15px;
+}
+
+.input {
+    width: 300px;
+}
+
+.span {
+    margin-left: 20px;
+    margin-right: 20px;
+}

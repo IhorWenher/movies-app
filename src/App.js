@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import { useEffect, Suspense, lazy } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { userSelectors } from './redux/user';
+import { userOperations, userSelectors } from './redux/user';
 import { moviesOperations } from './redux/movies';
 
 import Container from './components/Container';
@@ -14,6 +14,7 @@ const HomeView = lazy(() => import('./views/HomeView'));
 const RegisterView = lazy(() => import('./views/RegisterView'));
 const LoginView = lazy(() => import('./views/LoginView'));
 const MoviesView = lazy(() => import('./views/MoviesView'));
+const MovieDetailView = lazy(() => import('./views/MovieDetailView'));
 const LogoutView = lazy(() => import('./views/LogoutView'));
 
 function App() {
@@ -23,13 +24,13 @@ function App() {
   );
   const isLoginIn = useSelector(userSelectors.getIsLoggedIn);
   const token = useSelector(userSelectors.getUserToken);
-  console.log(isFetchingCurrentUser, isLoginIn, token);
 
-  useEffect(() => {
-    if (isLoginIn) {
-      dispatch(moviesOperations.getList);
-    }
-  }, [dispatch, isLoginIn]);
+  /*  useEffect(() => {
+    return () => {
+      dispatch(userOperations.logOut);
+    };
+  }, [dispatch]);
+ */
   return (
     <Container>
       {isFetchingCurrentUser ? (
@@ -52,6 +53,16 @@ function App() {
                 element={
                   <PrivateRoute redirectTo="/">
                     <MoviesView />
+                  </PrivateRoute>
+                }
+              />
+
+              <Route
+                exact
+                path="/movies/:id"
+                element={
+                  <PrivateRoute redirectTo="/">
+                    <MovieDetailView />
                   </PrivateRoute>
                 }
               />

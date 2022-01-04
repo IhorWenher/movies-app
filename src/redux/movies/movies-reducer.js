@@ -6,20 +6,27 @@ import operations from './movies-operations';
 const movies = createReducer([], {
   [operations.create.fulfilled]: (state, { payload }) => [...state, payload],
   [operations.remove.fulfilled]: (state, { payload }) =>
-    state.filter(({ id }) => id !== payload),
+    state.filter(({ id }) => id !== payload.id),
+
   [operations.update.fulfilled]: (state, { payload }) =>
     state.find((el, idx) => {
       if (el._id === payload._id) {
         state.splice(idx, 1, payload);
       }
     }),
-  [operations.getOne.fulfilled]: (_, { payload }) => payload,
   [operations.getList.fulfilled]: (_, { payload }) => payload,
   [operations.importFile.fulfilled]: (state, { payload }) => [
     ...state,
-    payload,
+    ...payload,
   ],
 });
+
+const oneMovie = createReducer(
+  {},
+  {
+    [operations.getOne.fulfilled]: (_, { payload }) => payload,
+  },
+);
 
 const loading = createReducer(false, {
   [operations.create.pending]: () => true,
@@ -74,6 +81,7 @@ const error = createReducer(null, {
 
 const moviesReducers = combineReducers({
   movies,
+  oneMovie,
   loading,
   error,
 });

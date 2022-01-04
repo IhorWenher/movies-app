@@ -88,7 +88,7 @@ const MoviesModal = ({ togleModal }) => {
         <select className={Styles.select} name="format" onChange={handleChange}>
           <option value="VHS">VHS</option>
           <option value="DVD">DVD</option>
-          <option value="Blue-Ray">Blue-Ray</option>
+          <option value="Blu-Ray">Blu-Ray</option>
         </select>
         <input
           className={Styles.input}

@@ -1,70 +1,83 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Spinner } from 'react-bootstrap';
-import { Button } from 'react-bootstrap';
 import { moviesSelectors, moviesOperations } from '../../redux/movies';
+import { Link } from 'react-router-dom';
 import { userOperations } from '../../redux/user';
 
 import Backdrop from '../../components/Backdrop';
 import MoviesModal from '../../components/MoviesModal';
+import InputSet from '../../components/InputSet';
+import FilterSet from '../../components/FilterSet';
+import MoviesList from '../../components/MoviesList';
 
-/* import ContactForm from '../../components/ContactForm';
-import ContactList from '../../components/ContactList';
-import Filter from '../../components/Filter';
- */
 import Styles from './MoviesView.module.css';
+import { Form, Button } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap';
 
 const MoviesView = () => {
   const [showModal, setShowModal] = useState(false);
-  const loading = useSelector(moviesSelectors.getLoading);
-  const movies = useSelector(moviesSelectors.getMovies);
+  const isLoading = useSelector(moviesSelectors.getLoading);
   const dispatch = useDispatch();
+  const [file, setFile] = useState(null);
+
+  useEffect(() => {
+    const params = {
+      /*  sort:, */
+      order: 'DESC',
+      limit: 20,
+      offset: 0,
+    };
+    dispatch(moviesOperations.getList(params));
+  }, [dispatch]);
+
+  const movies = useSelector(moviesSelectors.getMovies);
 
   const toggleModal = () => {
     setShowModal(!showModal);
   };
-  /* 
-  useEffect(() => {
-    dispatch(moviesOperations.getList());
-    console.log(movies);
-  }, [dispatch, movies]);
- */
-  console.log(showModal);
-  /* useEffect(() => {
-    return () => {
-      dispatch(userOperations.logOut);
-      Storage.clear();
-    };
-  }, [dispatch]);
- */
+
+  const onFileChange = e => {
+    setFile(e.target.files[0]);
+  };
+
+  const onFileUpload = () => {
+    if (file) {
+      const formData = new FormData();
+      formData.append('myFile', file, file.name);
+      dispatch(moviesOperations.importFile(file));
+    }
+  };
+
   return (
     <div className={Styles.container}>
-      <p>You have no movies yet, please press '+' to add your first</p>
-      <h2>Movies</h2>
+      <h1 className={Styles.h1}>
+        Your movies
+        {isLoading && <Spinner animation="border" variant="primary" />}
+      </h1>
+      {movies.length < 1 && (
+        <p>You have no movies yet, please press '+' to add your first</p>
+      )}
       {showModal && (
         <Backdrop>
           <MoviesModal togleModal={toggleModal} />
         </Backdrop>
       )}
 
-      <Button
-        variant="primary"
-        type="submit"
-        className={Styles.button}
-        onClick={toggleModal}
-      >
-        Add
-      </Button>
+      <InputSet
+        onFileChange={onFileChange}
+        onFileUpload={onFileUpload}
+        toggleModal={toggleModal}
+      />
 
-      {/* <h2 className={Styles.h2}>Phonebook page</h2>
-      <ContactForm />
-      <h2 className={Styles.h2}>
-        {contactsLength !== 0 && 'Contacts'}
-        {loading && <Spinner animation="border" variant="primary" />}
-      </h2>
+      <FilterSet />
 
-      {contactsLength > 1 && <Filter />}
-      <ContactList /> */}
+      <MoviesList />
+
+      <Link to={`/logout`} className={Styles.exitButton}>
+        <Button variant="outline-primary" type="button">
+          Exit
+        </Button>
+      </Link>
     </div>
   );
 };
