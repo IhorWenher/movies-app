@@ -4,7 +4,6 @@ import { userOperations } from '../../redux/user';
 import { Link } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import { validate } from 'indicative/validator';
-import { alert } from '@pnotify/core';
 
 import Styles from './RegisterForm.module.css';
 
@@ -68,14 +67,7 @@ const RegisterForm = () => {
       setPassword('');
       setConfirmPassword('');
     } catch (error) {
-      alert({
-        text: error[0].message,
-        hide: true,
-        delay: 2000,
-        sticker: false,
-        closer: true,
-        dir1: 'down',
-      });
+       alert('Incorrect data!');
     }
   }
 

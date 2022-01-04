@@ -50,18 +50,20 @@ const userSlice = createSlice({
       state.token = null;
       state.isLoggedIn = false;
     },
-    /* 
+
     [operations.fetchCurrentUser.request](state) {
       state.isFetchingCurrentUser = true;
     },
     [operations.fetchCurrentUser.fulfilled](state, action) {
-      state.user = action.payload;
+      state.user = action.payload.user;
+      state.token = action.payload.data.token;
       state.isLoggedIn = true;
       state.isFetchingCurrentUser = false;
     },
     [operations.fetchCurrentUser.rejected](state) {
       state.isFetchingCurrentUser = false;
-    }, */
+      state.error = true;
+    },
   },
 });
 

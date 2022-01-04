@@ -2,11 +2,10 @@ import { Routes, Route } from 'react-router-dom';
 import { useEffect, Suspense, lazy } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { userOperations, userSelectors } from './redux/user';
-import { moviesOperations } from './redux/movies';
 
-import Container from './components/Container';
 import { Spinner } from 'react-bootstrap';
 
+import Container from './components/Container';
 import PrivateRoute from './components/PrivateRoute';
 import PublicRoute from './components/PublicRoute';
 
@@ -22,19 +21,15 @@ function App() {
   const isFetchingCurrentUser = useSelector(
     userSelectors.getIsFetchingCurrentUser,
   );
-  const isLoginIn = useSelector(userSelectors.getIsLoggedIn);
-  const token = useSelector(userSelectors.getUserToken);
 
-  /*  useEffect(() => {
-    return () => {
-      dispatch(userOperations.logOut);
-    };
+  useEffect(() => {
+    dispatch(userOperations.fetchCurrentUser());
   }, [dispatch]);
- */
+
   return (
     <Container>
       {isFetchingCurrentUser ? (
-        <Spinner />
+        <Spinner animation="border" variant="primary" />
       ) : (
         <>
           <Suspense fallback={<Spinner />}>

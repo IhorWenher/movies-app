@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import { userOperations } from '../../redux/user';
 import { Link } from 'react-router-dom';
 
-import { alert } from '@pnotify/core';
 import { Form, Button } from 'react-bootstrap';
 
 import Styles from './LoginForm.module.css';
@@ -31,14 +30,7 @@ const LoginForm = () => {
       setEmail('');
       setPassword('');
     } catch (error) {
-      alert({
-        text: error[0].message,
-        hide: true,
-        delay: 2000,
-        sticker: false,
-        closer: true,
-        dir1: 'down',
-      });
+       alert('Incorrect data!');
     }
   };
 

@@ -1,0 +1,8 @@
+.exitButton {
+    position: absolute;
+    width: 85px;
+    right: 6%;
+    top: 84px;
+    color: rgb(56, 118, 201);
+    background-color: white;
+}

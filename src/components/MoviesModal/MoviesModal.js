@@ -2,13 +2,17 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { moviesOperations } from '../../redux/movies';
 
+import Backdrop from '../Backdrop';
+import { Button } from 'react-bootstrap';
+
 import Styles from './Movies.module.css';
 
 const MoviesModal = ({ togleModal }) => {
   const [title, setTitle] = useState('');
   const [year, setYear] = useState('');
   const [format, setFormat] = useState('VHS');
-  const [actors, setActors] = useState('');
+  const [actor, setActor] = useState('');
+  const [actors, setActors] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -30,7 +34,7 @@ const MoviesModal = ({ togleModal }) => {
         break;
 
       case 'actors':
-        setActors(value);
+        setActor(value);
         break;
 
       default:
@@ -41,15 +45,15 @@ const MoviesModal = ({ togleModal }) => {
   const handleSubmit = event => {
     event.preventDefault();
 
-    if (title === '' || year === '' || 2022 > actors > 1930) {
-      return alert('Enter or correct data!');
+    if (title === '' || 2022 > year > 1930 || actors.length < 1) {
+      return alert('Enter data!');
     }
 
     const movie = {
-      title: title,
-      year: year,
-      format: format,
-      actors: [actors, actors, actors, actors],
+      title,
+      year,
+      format,
+      actors,
     };
     console.log(movie);
     togleModal();
@@ -62,13 +66,20 @@ const MoviesModal = ({ togleModal }) => {
     setTitle('');
     setYear('');
     setFormat('');
+    setActor('');
     setActors([]);
   };
 
+  const addActors = () => {
+    console.log(actors);
+    console.log(actor);
+    setActors([...actors, actor]);
+  };
+
   return (
-    <>
+    <Backdrop>
       <form className={Styles.form} action="" onSubmit={handleSubmit}>
-        <p className={Styles.p}>Введите информацию</p>
+        <p className={Styles.p}>Enter information about movie</p>
         <input
           className={Styles.input}
           name="title"
@@ -97,14 +108,23 @@ const MoviesModal = ({ togleModal }) => {
           onChange={handleChange}
           placeholder="Add actors"
         />
+        <span>You added {actors.length} actors</span>
+        <Button
+          type="button"
+          className={Styles.addActorsButton}
+          onClick={addActors}
+        >
+          <span>Add</span>
+        </Button>
+
         <div className={Styles.buttons}>
-          <input type="submit" value="Добавить" />
+          <input type="submit" value="Add" />
           <button type="button" className={Styles.btn} onClick={togleModal}>
-            Отмена
+            Cancel
           </button>
         </div>
       </form>
-    </>
+    </Backdrop>
   );
 };
 

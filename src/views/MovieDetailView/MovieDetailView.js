@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { moviesOperations, moviesSelectors } from '../../redux/movies';
 
 import Styles from './MovieDetailView.module.css';

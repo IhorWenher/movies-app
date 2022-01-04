@@ -23,6 +23,7 @@ const register = createAsyncThunk(
 
     const user = {
       email: credentials.email,
+      password: credentials.password,
     };
 
     return { data, user };
@@ -39,6 +40,7 @@ const logIn = createAsyncThunk(
     token.set(data.token);
     const user = {
       email: credentials.email,
+      password: credentials.password,
     };
     return { data, user };
   },
@@ -48,7 +50,6 @@ const logOut = createAsyncThunk('user/logout', async () => {
   token.unset();
 });
 
-/*
 const fetchCurrentUser = createAsyncThunk(
   'user/refresh',
   async (_, thunkAPI) => {
@@ -61,16 +62,23 @@ const fetchCurrentUser = createAsyncThunk(
 
     token.set(persistedToken);
 
-    const { data } = await axios.get('users/current');
-    return data;
+    const user = state.user.user;
+
+    const { data } = await axios.post('/sessions', user);
+    if (data.status === 0) {
+      return data.error.error.code;
+    }
+    token.set(data.token);
+
+    return { data, user };
   },
 );
- */
+
 const operations = {
   register,
   logOut,
   logIn,
-  /* fetchCurrentUser, */
+  fetchCurrentUser,
 };
 
 export default operations;

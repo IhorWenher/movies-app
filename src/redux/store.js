@@ -24,7 +24,7 @@ const middleware = [
 const userPersistConfig = {
   key: 'user',
   storage,
-  whitelist: ['token'],
+  whitelist: ['token', 'user'],
 };
 
 export const store = configureStore({

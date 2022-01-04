@@ -1,4 +1,4 @@
-FROM node
+FROM node:16.13.1-buster
 
 WORKDIR /app
 
@@ -8,4 +8,4 @@ RUN npm install
 
 EXPOSE 3000
 
-CMD ["start"]
+CMD ["npm", "start"]

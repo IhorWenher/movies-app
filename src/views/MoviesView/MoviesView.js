@@ -1,34 +1,32 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { moviesSelectors, moviesOperations } from '../../redux/movies';
-import { Link } from 'react-router-dom';
-import { userOperations } from '../../redux/user';
 
-import Backdrop from '../../components/Backdrop';
 import MoviesModal from '../../components/MoviesModal';
 import InputSet from '../../components/InputSet';
 import FilterSet from '../../components/FilterSet';
 import MoviesList from '../../components/MoviesList';
+import ExitButton from '../../components/ExitButton';
 
 import Styles from './MoviesView.module.css';
-import { Form, Button } from 'react-bootstrap';
+
 import { Spinner } from 'react-bootstrap';
 
 const MoviesView = () => {
   const [showModal, setShowModal] = useState(false);
+  const [file, setFile] = useState(null);
+  const [filter, setFilter] = useState({});
   const isLoading = useSelector(moviesSelectors.getLoading);
   const dispatch = useDispatch();
-  const [file, setFile] = useState(null);
 
   useEffect(() => {
     const params = {
-      /*  sort:, */
-      order: 'DESC',
+      ...filter,
       limit: 20,
       offset: 0,
     };
     dispatch(moviesOperations.getList(params));
-  }, [dispatch]);
+  }, [filter, dispatch]);
 
   const movies = useSelector(moviesSelectors.getMovies);
 
@@ -45,6 +43,20 @@ const MoviesView = () => {
       const formData = new FormData();
       formData.append('myFile', file, file.name);
       dispatch(moviesOperations.importFile(file));
+    } else {
+      alert('File not found!');
+    }
+  };
+
+  const onFilter = filterValues => {
+    setFilter(filterValues);
+  };
+
+  const onOrder = orderValue => {
+    if (orderValue.order) {
+      setFilter({ order: 'DESC', sort: 'title' });
+    } else {
+      setFilter({ order: 'ASC', sort: 'title' });
     }
   };
 
@@ -57,27 +69,19 @@ const MoviesView = () => {
       {movies.length < 1 && (
         <p>You have no movies yet, please press '+' to add your first</p>
       )}
-      {showModal && (
-        <Backdrop>
-          <MoviesModal togleModal={toggleModal} />
-        </Backdrop>
-      )}
-
+      {showModal && <MoviesModal togleModal={toggleModal} />}
       <InputSet
         onFileChange={onFileChange}
         onFileUpload={onFileUpload}
         toggleModal={toggleModal}
       />
-
-      <FilterSet />
-
+      <FilterSet
+        onFilter={onFilter}
+        onOrder={onOrder}
+        reset={() => setFilter({})}
+      />
       <MoviesList />
-
-      <Link to={`/logout`} className={Styles.exitButton}>
-        <Button variant="outline-primary" type="button">
-          Exit
-        </Button>
-      </Link>
+      <ExitButton />
     </div>
   );
 };
