@@ -19,10 +19,12 @@ here
 
 Project structure.
 
-    The project is implemented as a single-page application, so the App file has
-
+The project is implemented as a single-page application, so the App file has
 routing and connection of six views through lazy loading (name, login, register,
-movies, movieDetail, logout views). Each view renders the required components
-located in the components folder. All work with the global state is implemented
-through Redux, Redux-toolkit. Redax is divided into authorization and work with
-movies (user, movies).
+movies, movieDetail, logout views).
+
+Each view renders the required components located in the components folder.
+
+All work with the global state is implemented through Redux, Redux-toolkit.
+
+Redax is divided into authorization and work with movies (user, movies).
