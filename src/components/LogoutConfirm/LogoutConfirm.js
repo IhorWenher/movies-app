@@ -3,7 +3,6 @@ import { userOperations } from '../../redux/user';
 import { Link } from 'react-router-dom';
 
 import Styles from './LogoutConfirm.module.css';
-import { Button } from 'bootstrap';
 
 const LogoutConfirm = () => {
   const dispatch = useDispatch();

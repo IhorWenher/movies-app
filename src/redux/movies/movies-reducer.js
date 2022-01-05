@@ -9,6 +9,7 @@ const movies = createReducer([], {
     state.filter(({ id }) => id !== payload.id),
 
   [operations.update.fulfilled]: (state, { payload }) =>
+    // eslint-disable-next-line array-callback-return
     state.find((el, idx) => {
       if (el._id === payload._id) {
         state.splice(idx, 1, payload);
