@@ -55,7 +55,7 @@ const MoviesModal = ({ togleModal }) => {
       format,
       actors,
     };
-    console.log(movie);
+
     togleModal();
 
     dispatch(moviesOperations.create(movie));
@@ -71,8 +71,6 @@ const MoviesModal = ({ togleModal }) => {
   };
 
   const addActors = () => {
-    console.log(actors);
-    console.log(actor);
     setActors([...actors, actor]);
   };
 

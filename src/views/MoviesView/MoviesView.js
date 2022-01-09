@@ -16,6 +16,8 @@ const MoviesView = () => {
   const [showModal, setShowModal] = useState(false);
   const [file, setFile] = useState(null);
   const [filter, setFilter] = useState({});
+  const [offset, setOffset] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const isLoading = useSelector(moviesSelectors.getLoading);
   const dispatch = useDispatch();
 
@@ -23,10 +25,10 @@ const MoviesView = () => {
     const params = {
       ...filter,
       limit: 20,
-      offset: 0,
+      offset: offset,
     };
     dispatch(moviesOperations.getList(params));
-  }, [filter, dispatch]);
+  }, [filter, offset, dispatch]);
 
   const movies = useSelector(moviesSelectors.getMovies);
 
