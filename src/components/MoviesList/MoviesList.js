@@ -1,17 +1,45 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { moviesOperations, moviesSelectors } from '../../redux/movies';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { moviesSelectors } from '../../redux/movies';
+
+import MovieDetailModal from '../MovieDetailModal';
+import MovieRemoveModal from '../MovieRemoveModal';
 
 import { Button } from 'react-bootstrap';
 import Styles from './MoviesList.module.css';
 
 const MoviesList = () => {
-  const dispatch = useDispatch();
+  const [showMovieModal, setShowMovieModal] = useState(false);
+  const [showRemoveModal, setShowRemoveModal] = useState(false);
+  const [idToDetail, setIdToDetail] = useState(null);
+  const [idToRemove, setIdToRemove] = useState(null);
 
   const movies = useSelector(moviesSelectors.getMovies);
 
+  const onDetailRequest = id => {
+    setIdToDetail(id);
+    setShowMovieModal(true);
+  };
+
+  const onRemoveRequest = id => {
+    setIdToRemove(id);
+    setShowRemoveModal(true);
+  };
+
   return (
     <>
+      {showMovieModal && (
+        <MovieDetailModal
+          id={idToDetail}
+          toggleDetailModal={() => setShowMovieModal(false)}
+        />
+      )}
+      {showRemoveModal && (
+        <MovieRemoveModal
+          id={idToRemove}
+          toggleRemoveModal={() => setShowRemoveModal(false)}
+        />
+      )}
       <ul className={Styles.list}>
         {movies.map(({ id, title, year, format }) => {
           return (
@@ -21,17 +49,19 @@ const MoviesList = () => {
               <span className={Styles.span}>Year: {year}</span>
               <span className={Styles.span}>Format: {format}</span>
 
-              <Link to={`/movies/${id}`} className={Styles.btn}>
-                <Button variant="primary" type="button">
-                  Show more
-                </Button>
-              </Link>
-
               <Button
-              className={Styles.deleteBtn}
                 variant="primary"
                 type="button"
-                onClick={() => dispatch(moviesOperations.remove(id))}
+                onClick={() => onDetailRequest(id)}
+              >
+                Show more
+              </Button>
+
+              <Button
+                className={Styles.deleteBtn}
+                variant="primary"
+                type="button"
+                onClick={() => onRemoveRequest(id)}
               >
                 Delete
               </Button>

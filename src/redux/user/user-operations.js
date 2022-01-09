@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 axios.defaults.baseURL = 'http://localhost:8000/api/v1/';
@@ -17,6 +18,7 @@ const register = createAsyncThunk(
   async (credentials, { rejectWithValue }) => {
     const { data } = await axios.post('/users', credentials);
     if (data.status === 0) {
+      toast.error('Incorrect data');
       return rejectWithValue(data.error.error.code);
     }
     token.set(data.token);
@@ -35,6 +37,7 @@ const logIn = createAsyncThunk(
   async (credentials, { rejectWithValue }) => {
     const { data } = await axios.post('/sessions', credentials);
     if (data.status === 0) {
+      toast.error('Incorrect data');
       return rejectWithValue(data.error.error.code);
     }
     token.set(data.token);
@@ -66,7 +69,7 @@ const fetchCurrentUser = createAsyncThunk(
 
     const { data } = await axios.post('/sessions', user);
     if (data.status === 0) {
-      return data.error.error.code;
+      return thunkAPI.rejectWithValue(data.error.error.code);
     }
     token.set(data.token);
 

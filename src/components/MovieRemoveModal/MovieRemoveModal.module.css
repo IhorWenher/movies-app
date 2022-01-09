@@ -1,9 +1,8 @@
 .confirmContainer {
-    padding: 12% 50px;
-    margin-right: auto;
-    margin-left: auto;
-    width: 50%;
-    min-height: 205px;
+    padding: 50px;
+    margin: auto;
+    width: 30%;
+    min-height: 300px;
     text-align: center;
     background-color: white;
     border-radius: 20px;

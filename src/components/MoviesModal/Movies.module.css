@@ -1,8 +1,9 @@
 .form {
     position: relative;
-    width: 50%;
+    min-width: 650px;
+    min-height: 550px;
     margin: auto;
-    padding: 40px;
+    padding: 60px 40px;
     border-radius: 20px;
     background-color: rgb(255, 255, 255);
     text-align: center;
@@ -63,11 +64,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    right: 20%;
-    bottom: 28%;
+    right: 19%;
+    bottom: 37%;
     width: 45px;
     height: 30px;
-    margin-left: 30px;
     color: rgb(255, 255, 255);
     border: 1px solid rgb(70, 148, 251);
     background-color: rgb(70, 148, 251);

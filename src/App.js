@@ -13,7 +13,6 @@ const HomeView = lazy(() => import('./views/HomeView'));
 const RegisterView = lazy(() => import('./views/RegisterView'));
 const LoginView = lazy(() => import('./views/LoginView'));
 const MoviesView = lazy(() => import('./views/MoviesView'));
-const MovieDetailView = lazy(() => import('./views/MovieDetailView'));
 const LogoutView = lazy(() => import('./views/LogoutView'));
 
 function App() {
@@ -48,16 +47,6 @@ function App() {
                 element={
                   <PrivateRoute redirectTo="/">
                     <MoviesView />
-                  </PrivateRoute>
-                }
-              />
-
-              <Route
-                exact
-                path="/movies/:id"
-                element={
-                  <PrivateRoute redirectTo="/">
-                    <MovieDetailView />
                   </PrivateRoute>
                 }
               />

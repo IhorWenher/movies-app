@@ -4,6 +4,7 @@ import { moviesOperations } from '../../redux/movies';
 
 import Backdrop from '../Backdrop';
 import { Button } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 
 import Styles from './Movies.module.css';
 
@@ -45,8 +46,32 @@ const MoviesModal = ({ togleModal }) => {
   const handleSubmit = event => {
     event.preventDefault();
 
-    if (title === '' || 2022 > year > 1930 || actors.length < 1) {
-      return alert('Enter data!');
+    const actorsValidator = actors => {
+      const pattern =
+        /^[a-zA-Zа-яА-Я]+(([, ' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/;
+
+      const validatedArray = actors.map(actor => {
+        const value = pattern.test(actor);
+        return value;
+      });
+
+      return validatedArray;
+    };
+
+    if (title === '') {
+      toast.warn('Title is required');
+      return;
+    } else if (2022 > year > 1930 || year === 0) {
+      toast.warn('Enter year from 1930 to 2022');
+      return;
+    } else if (actors.length < 1) {
+      toast.warn('Please, add actors');
+      return;
+    } else if (actorsValidator(actors).includes(false)) {
+      toast.warn(
+        'The name can only consist of letters, apostrophe, comma, dash and spaces.',
+      );
+      return;
     }
 
     const movie = {
@@ -103,6 +128,8 @@ const MoviesModal = ({ togleModal }) => {
           className={Styles.input}
           name="actors"
           type="text"
+          pattern="^[a-zA-Zа-яА-Я]+(([, ' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          title="The name can only consist of letters, apostrophe, comma, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan, etc."
           onChange={handleChange}
           placeholder="Add actors"
         />

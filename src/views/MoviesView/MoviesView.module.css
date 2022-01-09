@@ -1,5 +1,6 @@
 .container {
     position: relative;
+    text-align: center;
     width: 100%;
     height: 100%;
     padding: 80px;
@@ -10,4 +11,9 @@
     margin: 0;
     margin-bottom: 10px;
     color: rgb(56, 118, 201);
+}
+
+.pagination {
+    margin-top: 40px;
+    margin-bottom: 40px;
 }

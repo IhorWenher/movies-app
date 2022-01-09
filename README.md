@@ -20,8 +20,8 @@ here
 Project structure.
 
 The project is implemented as a single-page application, so the App file has
-routing and connection of six views through lazy loading (name, login, register,
-movies, movieDetail, logout views).
+routing and connection of 5 views through lazy loading (name, login, register,
+movies, logout views).
 
 Each view renders the required components located in the components folder.
 

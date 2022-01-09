@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
+
+import { toast } from 'react-toastify';
+
 import Styles from './FilterSet.module.css';
 
 const FilterSet = ({ onFilter, onOrder, reset }) => {
-  const [title, setTitle] = useState(null);
-  const [actor, setActor] = useState(null);
+  const [title, setTitle] = useState('');
+  const [actor, setActor] = useState('');
   const [order, setOrder] = useState(true);
 
   const onFilterChange = e => {
@@ -25,7 +28,7 @@ const FilterSet = ({ onFilter, onOrder, reset }) => {
           return;
       }
     } else {
-      alert('Incorrect input data!');
+      toast.error('Incorrect input data');
     }
   };
 
@@ -35,9 +38,21 @@ const FilterSet = ({ onFilter, onOrder, reset }) => {
   };
 
   const onFilterConfirm = () => {
-    onFilter({ title, actor });
-    setTitle(null);
-    setActor(null);
+    if (actor === '' && title === '') {
+      return;
+    } else if (actor !== '' && title === '') {
+      onFilter({ actor });
+    } else if (actor === '' && title !== '') {
+      onFilter({ title });
+    } else if (actor !== '' && title !== '') {
+      onFilter({ title, actor });
+    }
+  };
+
+  const onReset = () => {
+    reset();
+    setActor('');
+    setTitle('');
   };
 
   return (
@@ -56,6 +71,7 @@ const FilterSet = ({ onFilter, onOrder, reset }) => {
         type="text"
         placeholder="Filter by title"
         name="title"
+        value={title}
         onChange={onFilterChange}
       />
       <Button
@@ -72,6 +88,7 @@ const FilterSet = ({ onFilter, onOrder, reset }) => {
         type="name"
         placeholder="Filter by actors name"
         name="actor"
+        value={actor}
         onChange={onFilterChange}
       />
       <Button
@@ -87,7 +104,7 @@ const FilterSet = ({ onFilter, onOrder, reset }) => {
         variant="primary"
         type="submit"
         className={Styles.resetButton}
-        onClick={reset}
+        onClick={onReset}
       >
         Reset
       </Button>

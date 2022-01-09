@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 const create = createAsyncThunk(
@@ -7,8 +8,11 @@ const create = createAsyncThunk(
     const { data } = await axios.post('/movies', addData);
 
     if (data.status === 0) {
+      toast.error('Something went wrong');
       return rejectWithValue(data.error.error.code);
     }
+
+    toast.success('Movie successfully added');
 
     return data.data;
   },
@@ -20,10 +24,13 @@ const remove = createAsyncThunk(
     const { data } = await axios.delete(`/movies/${id}`);
 
     if (data.status === 0) {
+      toast.error('Something went wrong');
       return rejectWithValue(data.error.error.code);
     }
 
-    return { id, data };
+    toast.success('Movie successfully deleted');
+
+    return id;
   },
 );
 
@@ -33,8 +40,11 @@ const update = createAsyncThunk(
     const { data } = await axios.patch(`/movies/${id}`, updateData);
 
     if (data.status === 0) {
+      toast.error('Something went wrong');
       return rejectWithValue(data.error.error.code);
     }
+
+    toast.success('Movie successfully updated');
 
     return data.data;
   },
@@ -46,6 +56,7 @@ const getOne = createAsyncThunk(
     const { data } = await axios.get(`/movies/${id}`);
 
     if (data.status === 0) {
+      toast.error('Something went wrong');
       return rejectWithValue(data.error.error.code);
     }
 
@@ -61,10 +72,14 @@ const getList = createAsyncThunk(
     });
 
     if (data.status === 0) {
+      toast.error('Something went wrong');
       return rejectWithValue(data.error.error.code);
     }
 
-    return data.data;
+    const items = data.data;
+    const count = Number(data.meta.total);
+
+    return { items, count };
   },
 );
 
@@ -79,10 +94,16 @@ const importFile = createAsyncThunk(
     });
 
     if (data.status === 0) {
+      toast.error('Something went wrong');
       return rejectWithValue(data.error.error.code);
     }
 
-    return data.data;
+    const items = data.data;
+    const count = Number(data.meta.total);
+
+    toast.success('Movies successfully added');
+
+    return { items, count };
   },
 );
 

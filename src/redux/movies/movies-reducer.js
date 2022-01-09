@@ -3,24 +3,38 @@ import { createReducer } from '@reduxjs/toolkit';
 
 import operations from './movies-operations';
 
-const movies = createReducer([], {
-  [operations.create.fulfilled]: (state, { payload }) => [...state, payload],
-  [operations.remove.fulfilled]: (state, { payload }) =>
-    state.filter(({ id }) => id !== payload.id),
+const movies = createReducer(
+  { items: [], count: 0 },
+  {
+    [operations.create.fulfilled]: (state, { payload }) => {
+      return {
+        items: [...state.items, payload],
+        count: state.count + 1,
+      };
+    },
+    [operations.remove.fulfilled]: (state, { payload }) => {
+      return {
+        items: state.items.filter(({ id }) => id !== payload),
+        count: state.count - 1,
+      };
+    },
 
-  [operations.update.fulfilled]: (state, { payload }) =>
-    // eslint-disable-next-line array-callback-return
-    state.find((el, idx) => {
-      if (el._id === payload._id) {
-        state.splice(idx, 1, payload);
-      }
-    }),
-  [operations.getList.fulfilled]: (_, { payload }) => payload,
-  [operations.importFile.fulfilled]: (state, { payload }) => [
-    ...state,
-    ...payload,
-  ],
-});
+    [operations.update.fulfilled]: (state, { payload }) =>
+      // eslint-disable-next-line array-callback-return
+      state.items.find((el, idx) => {
+        if (el._id === payload._id) {
+          state.splice(idx, 1, payload);
+        }
+      }),
+    [operations.getList.fulfilled]: (_, { payload }) => payload,
+    [operations.importFile.fulfilled]: (state, { payload }) => {
+      return {
+        items: [...state.items, ...payload.items],
+        count: payload.count,
+      };
+    },
+  },
+);
 
 const oneMovie = createReducer(
   {},
@@ -74,11 +88,6 @@ const error = createReducer(null, {
   [operations.importFile.rejected]: (_, { payload }) => payload,
   [operations.importFile.fulfilled]: () => null,
 });
-
-/* const filter = createReducer('', {
-  []: (_, { payload }) => payload,
-});
- */
 
 const moviesReducers = combineReducers({
   movies,

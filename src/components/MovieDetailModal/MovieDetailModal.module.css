@@ -1,0 +1,27 @@
+.container {
+    padding: 50px;
+    margin: auto;
+    width: 60%;
+    min-height: 600px;
+    text-align: center;
+    background-color: white;
+    border-radius: 20px;
+    border: solid #e7eaf2;
+    box-shadow: 7px 7px 20px 7px rgb(126, 171, 230);
+}
+
+.title {
+    margin-top: 70px;
+}
+
+.ul {
+    padding: 0;
+}
+
+.li {
+    list-style: none;
+}
+
+.span {
+    display: block;
+}

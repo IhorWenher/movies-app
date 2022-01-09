@@ -4,6 +4,7 @@ import { userOperations } from '../../redux/user';
 import { Link } from 'react-router-dom';
 
 import { Form, Button } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 
 import Styles from './LoginForm.module.css';
 
@@ -30,7 +31,7 @@ const LoginForm = () => {
       setEmail('');
       setPassword('');
     } catch (error) {
-       alert('Incorrect data!');
+      toast.error('Incorrect data');
     }
   };
 

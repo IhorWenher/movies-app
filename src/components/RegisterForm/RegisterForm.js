@@ -6,6 +6,7 @@ import { Form, Button } from 'react-bootstrap';
 import { validate } from 'indicative/validator';
 
 import Styles from './RegisterForm.module.css';
+import { toast } from 'react-toastify';
 
 const RegisterForm = () => {
   const dispatch = useDispatch();
@@ -67,7 +68,7 @@ const RegisterForm = () => {
       setPassword('');
       setConfirmPassword('');
     } catch (error) {
-       alert('Incorrect data!');
+      toast.error('Incorrect data');
     }
   }
 
